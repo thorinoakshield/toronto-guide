@@ -28,7 +28,7 @@
     top:16px;
     left:16px;
     z-index:1000;
-    width:300px;
+    width:360px;
     max-width:calc(100vw - 32px);
     max-height:calc(100vh - 32px);
     display:flex;
@@ -595,6 +595,22 @@
     return window.matchMedia('(max-width: 640px)').matches;
   }
 
+  // Smooth zoom, with a self-healing fallback: Leaflet's zoom animation waits for a
+  // CSS transitionend event to unlock the map, and that event can fail to fire (browser/GPU
+  // dependent) — when it does, the map gets stuck mid-animation forever. _stop() before AND
+  // after clears that lock; the watchdog forces a snap-to-target if the animation never settles.
+  function safeFitBounds(bounds, options){
+    map._stop();
+    map.fitBounds(bounds, Object.assign({}, options, { animate: true }));
+    clearTimeout(safeFitBounds._watchdog);
+    safeFitBounds._watchdog = setTimeout(() => {
+      if(map._animatingZoom){
+        map._stop();
+        map.fitBounds(bounds, Object.assign({}, options, { animate: false }));
+      }
+    }, 900);
+  }
+
   function closePopup(){
     popup.classList.remove('is-open');
     if(activeId && layers[activeId]){
@@ -603,7 +619,7 @@
     }
     activeId = null;
     document.querySelectorAll('.item').forEach(el => el.classList.remove('is-active'));
-    map.fitBounds(oldTorontoBounds, { animate: false });
+    safeFitBounds(oldTorontoBounds, {});
     if(isMobile()) setPanelCollapsed(false);
   }
 
@@ -634,8 +650,7 @@
 
     document.querySelectorAll('.item').forEach(el => el.classList.toggle('is-active', el.dataset.id === id));
 
-    // animate:false — animated zoom can get stuck permanently against maxBounds (never recovers)
-    map.fitBounds(layers[id].getBounds(), { padding: [80,80], maxZoom: 16, animate: false });
+    safeFitBounds(layers[id].getBounds(), { padding: [80,80], maxZoom: 16 });
 
     if(isMobile()) setPanelCollapsed(true);
   }
