@@ -39,22 +39,16 @@
   }
   .panel-head{
     display:flex;
-    align-items:flex-start;
+    align-items:center;
     justify-content:space-between;
     gap:0.5rem;
-    padding:1.1rem 1.2rem 0;
+    padding:0.8rem 0.9rem;
   }
   .panel h1{
     font-size:1.1rem;
-    margin:0 0 0.2rem;
+    margin:0;
     font-weight:700;
     letter-spacing:-0.01em;
-  }
-  .panel .sub{
-    font-size:0.8rem;
-    color:var(--ink-soft);
-    margin:0 0 0.9rem;
-    line-height:1.4;
   }
   .collapse-btn{
     border:none;
@@ -68,28 +62,29 @@
   }
   .panel-body{
     overflow-y:auto;
-    padding:0 1.2rem 1.2rem;
+    padding:0 0.9rem 0.9rem;
   }
   .panel.is-collapsed .panel-body{ display:none; }
 
   .list{
     display:flex;
     flex-direction:column;
-    gap:2px;
+    gap:0px;
     border-top:1px solid var(--line);
     padding-top:0.5rem;
+    margin-top:0.6rem;
   }
   .item{
     display:flex;
     align-items:center;
-    gap:0.55rem;
+    gap:0.45rem;
     width:100%;
     text-align:left;
     background:none;
     border:none;
-    border-radius:8px;
-    padding:0.4rem 0.5rem;
-    font-size:0.86rem;
+    border-radius:6px;
+    padding:0.2rem 0.4rem;
+    font-size:0.76rem;
     font-family:inherit;
     color:var(--ink);
     cursor:pointer;
@@ -97,8 +92,8 @@
   .item:hover{ background:#f3efe4; }
   .item.is-active{ background:#eee7d6; font-weight:600; }
   .item .dot{
-    width:11px;
-    height:11px;
+    width:9px;
+    height:9px;
     border-radius:50%;
     flex:none;
     box-shadow:0 0 0 2px rgba(0,0,0,0.06);
@@ -117,15 +112,15 @@
     margin:0 0 0.5rem;
   }
   .overview-photos{
-    display:grid;
-    grid-template-columns:repeat(3, 1fr);
-    gap:4px;
+    display:flex;
+    flex-direction:column;
+    gap:8px;
     margin-bottom:0.6rem;
   }
   .overview-photos a{
     display:block;
-    aspect-ratio:1;
-    border-radius:6px;
+    aspect-ratio:4/3;
+    border-radius:8px;
     overflow:hidden;
     background:var(--line);
   }
@@ -300,10 +295,9 @@
     .attrib-note{ display:none; }
 
     .panel h1{ font-size:0.95rem; }
-    .panel .sub{ font-size:0.72rem; margin-bottom:0.6rem; }
     .collapse-btn{ font-size:0.95rem; }
-    .item{ font-size:0.8rem; padding:0.32rem 0.5rem; }
-    .item .dot{ width:9px; height:9px; }
+    .item{ font-size:0.7rem; padding:0.16rem 0.35rem; }
+    .item .dot{ width:8px; height:8px; }
     .overview h2{ font-size:0.9rem; }
     .overview h3{ font-size:0.62rem; }
     .overview p{ font-size:0.78rem; line-height:1.45; }
@@ -320,10 +314,7 @@
 
 <div class="panel" id="panel">
   <div class="panel-head">
-    <div>
-      <h1>Old Toronto, for visitors</h1>
-      <p class="sub">Tap a name — or a shaded area — to see what's there.</p>
-    </div>
+    <h1>Toronto</h1>
     <button class="collapse-btn" id="collapseBtn" aria-label="Collapse panel">&#9650;</button>
   </div>
   <div class="panel-body" id="panelBody">
@@ -399,7 +390,7 @@
       coords: [[[43.65593,-79.410753],[43.658622,-79.41182],[43.65567,-79.426047],[43.652978,-79.42498]]],
       outlineOnly: false,
       history: "College Street became the heart of Toronto's Italian community through waves of postwar immigration, and its espresso-bar culture followed. The strip is famous for spontaneous street parties whenever Italy wins a big match — traffic simply stops.",
-      images: [{"url":"https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/College_Street_at_Clinton_Street_in_Toronto%2C_July_5_2026_%2801%29.jpg/700px-College_Street_at_Clinton_Street_in_Toronto%2C_July_5_2026_%2801%29.jpg","page":"https://commons.wikimedia.org/wiki/File:College_Street_at_Clinton_Street_in_Toronto,_July_5_2026_(01).jpg"},{"url":"https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/College_Street_in_Little_Italy%2C_Toronto%2C_September_27_2025_%2805%29.jpg/960px-College_Street_in_Little_Italy%2C_Toronto%2C_September_27_2025_%2805%29.jpg","page":"https://commons.wikimedia.org/wiki/File%3ACollege_Street_in_Little_Italy%2C_Toronto%2C_September_27_2025_(05).jpg"},{"url":"https://upload.wikimedia.org/wikipedia/commons/thumb/b/ba/Toronto_Little_Italy_23_%288439722583%29.jpg/960px-Toronto_Little_Italy_23_%288439722583%29.jpg","page":"https://commons.wikimedia.org/wiki/File%3AToronto_Little_Italy_23_(8439722583).jpg"}],
+      images: [{"url":"https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/College_Street_at_Clinton_Street_in_Toronto%2C_July_5_2026_%2801%29.jpg/960px-College_Street_at_Clinton_Street_in_Toronto%2C_July_5_2026_%2801%29.jpg","page":"https://commons.wikimedia.org/wiki/File:College_Street_at_Clinton_Street_in_Toronto,_July_5_2026_(01).jpg"},{"url":"https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/College_Street_in_Little_Italy%2C_Toronto%2C_September_27_2025_%2805%29.jpg/960px-College_Street_in_Little_Italy%2C_Toronto%2C_September_27_2025_%2805%29.jpg","page":"https://commons.wikimedia.org/wiki/File%3ACollege_Street_in_Little_Italy%2C_Toronto%2C_September_27_2025_(05).jpg"},{"url":"https://upload.wikimedia.org/wikipedia/commons/thumb/b/ba/Toronto_Little_Italy_23_%288439722583%29.jpg/960px-Toronto_Little_Italy_23_%288439722583%29.jpg","page":"https://commons.wikimedia.org/wiki/File%3AToronto_Little_Italy_23_(8439722583).jpg"}],
       activities: ["Patio-hop along College St","Catch a game at a sports bar"],
       food: ["Espresso bars and trattorias","Gelato for the walk home"],
       shops: ["Small boutiques and specialty grocers"]
@@ -447,7 +438,7 @@
       coords: [[[43.6536008,-79.4264062],[43.6532744,-79.4262779],[43.6527265,-79.4260655],[43.6522389,-79.4258805],[43.6514549,-79.4255593],[43.6498038,-79.4248974],[43.6494758,-79.4247365],[43.6434812,-79.4223723],[43.6436173,-79.4218035],[43.6437274,-79.4211973],[43.6439812,-79.4200098],[43.6442044,-79.4188631],[43.6444795,-79.4174818],[43.644726,-79.4163043],[43.644973,-79.4150759],[43.6452055,-79.4139788],[43.6453666,-79.4131963],[43.6457009,-79.4114891],[43.6457489,-79.4112591],[43.6458474,-79.4107897],[43.6459969,-79.4099468],[43.6460803,-79.4095767],[43.6462892,-79.4085829],[43.6464692,-79.4077112],[43.6465427,-79.4073229],[43.646683,-79.4065759],[43.6469673,-79.405206],[43.6471883,-79.4040101],[43.648026,-79.4043269],[43.6497543,-79.4050102],[43.652304,-79.406012],[43.6523201,-79.4060175],[43.6523747,-79.4060382],[43.6523951,-79.4060459],[43.6524053,-79.4060497],[43.6524417,-79.406065],[43.652857,-79.4062387],[43.6529236,-79.4062666],[43.6529475,-79.406276],[43.6530354,-79.4063118],[43.6540737,-79.4067341],[43.6541573,-79.4067681],[43.6541907,-79.4067817],[43.6542109,-79.4067899],[43.6542934,-79.4068241],[43.65436,-79.4068516],[43.6543923,-79.4068646],[43.6558345,-79.4074486],[43.6560348,-79.4075312],[43.6561925,-79.4075945],[43.6563581,-79.407661],[43.6563886,-79.4076731],[43.6564484,-79.4076969],[43.6564528,-79.4076987],[43.6564664,-79.4077041],[43.6563538,-79.4083542],[43.6562313,-79.4089611],[43.6559703,-79.4101654],[43.6557151,-79.4114099],[43.6554619,-79.4126183],[43.6552144,-79.4138803],[43.6549709,-79.4150584],[43.6549505,-79.4151798],[43.6549369,-79.4152958],[43.6549282,-79.4154353],[43.6549389,-79.415556],[43.6551155,-79.4167355],[43.6551688,-79.4170801],[43.655245,-79.4179049],[43.6552586,-79.4180967],[43.6552532,-79.4182529],[43.6552348,-79.4185902],[43.6551863,-79.4188732],[43.6550398,-79.4197141],[43.6549107,-79.4202733],[43.6546555,-79.4214897],[43.6543992,-79.4227086],[43.6541228,-79.4239593],[43.6538686,-79.4251844],[43.6536008,-79.4264062]]],
       outlineOnly: false,
       history: "The park sits on the former grounds of Trinity College, an Anglican college founded in 1852 (long since merged into the University of Toronto). Its rolling dips trace the buried course of Garrison Creek, which still runs underground beneath the park.",
-      images: [{"url":"https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/Trinity_Bellwoods_Gates.jpg/960px-Trinity_Bellwoods_Gates.jpg","page":"https://commons.wikimedia.org/wiki/File%3ATrinity_Bellwoods_Gates.jpg"},{"url":"https://upload.wikimedia.org/wikipedia/commons/thumb/e/ea/Trinity_Bellwoods_Park_2022.jpg/700px-Trinity_Bellwoods_Park_2022.jpg","page":"https://commons.wikimedia.org/wiki/File:Trinity_Bellwoods_Park_2022.jpg"},{"url":"https://upload.wikimedia.org/wikipedia/commons/thumb/5/58/Trinity_Bellwoods_Park_Cherry_blossom_2022.jpg/700px-Trinity_Bellwoods_Park_Cherry_blossom_2022.jpg","page":"https://commons.wikimedia.org/wiki/File:Trinity_Bellwoods_Park_Cherry_blossom_2022.jpg"}],
+      images: [{"url":"https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/Trinity_Bellwoods_Gates.jpg/960px-Trinity_Bellwoods_Gates.jpg","page":"https://commons.wikimedia.org/wiki/File%3ATrinity_Bellwoods_Gates.jpg"},{"url":"https://upload.wikimedia.org/wikipedia/commons/thumb/e/ea/Trinity_Bellwoods_Park_2022.jpg/960px-Trinity_Bellwoods_Park_2022.jpg","page":"https://commons.wikimedia.org/wiki/File:Trinity_Bellwoods_Park_2022.jpg"},{"url":"https://upload.wikimedia.org/wikipedia/commons/thumb/5/58/Trinity_Bellwoods_Park_Cherry_blossom_2022.jpg/960px-Trinity_Bellwoods_Park_Cherry_blossom_2022.jpg","page":"https://commons.wikimedia.org/wiki/File:Trinity_Bellwoods_Park_Cherry_blossom_2022.jpg"}],
       activities: ["Picnic in the park","Dogs off-leash area"],
       food: ["Coffee on Dundas West","Casual bites nearby"],
       shops: ["Small design and clothing shops on Queen"]
@@ -459,7 +450,7 @@
       coords: [[[43.6434812,-79.4223723],[43.6434653,-79.4223674],[43.6434025,-79.4223391],[43.6431193,-79.4222346],[43.6430286,-79.4222019],[43.641582,-79.4216549],[43.6415023,-79.4216275],[43.6413518,-79.4216131],[43.6412393,-79.4216226],[43.6408161,-79.4216534],[43.6406,-79.4214986],[43.640534,-79.4195518],[43.6403997,-79.4154707],[43.6402442,-79.4112547],[43.6401841,-79.4096848],[43.6401244,-79.4085775],[43.6400846,-79.407801],[43.6400691,-79.4070219],[43.640071,-79.4061086],[43.6401118,-79.405202],[43.6401613,-79.4044282],[43.6402234,-79.4037817],[43.6403704,-79.4012732],[43.6405553,-79.401349],[43.6407494,-79.4014217],[43.6415215,-79.4017359],[43.6419145,-79.4018948],[43.6426555,-79.4021959],[43.6431937,-79.4023964],[43.6439249,-79.4027055],[43.6445417,-79.4029553],[43.6451904,-79.4032326],[43.645516,-79.40337],[43.6464714,-79.4037606],[43.6468225,-79.4038894],[43.6471883,-79.4040101],[43.6469673,-79.405206],[43.646683,-79.4065759],[43.6465427,-79.4073229],[43.6464692,-79.4077112],[43.6462892,-79.4085829],[43.6460803,-79.4095767],[43.6459969,-79.4099468],[43.6458474,-79.4107897],[43.6457489,-79.4112591],[43.6457009,-79.4114891],[43.6453666,-79.4131963],[43.6452055,-79.4139788],[43.644973,-79.4150759],[43.644726,-79.4163043],[43.6444795,-79.4174818],[43.6442044,-79.4188631],[43.6439812,-79.4200098],[43.6437274,-79.4211973],[43.6436173,-79.4218035],[43.6434812,-79.4223723]]],
       outlineOnly: false,
       history: "Once a garment and warehouse strip, Queen West became Toronto's arts-and-fashion corridor through the 1980s and 90s as galleries, indie labels, and music venues moved into cheap storefronts — a reputation for street style and street art that has stuck.",
-      images: [{"url":"https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Queen_Street_West_in_Toronto%2C_July_7_2025_%2807%29.jpg/700px-Queen_Street_West_in_Toronto%2C_July_7_2025_%2807%29.jpg","page":"https://commons.wikimedia.org/wiki/File:Queen_Street_West_in_Toronto,_July_7_2025_(07).jpg"},{"url":"https://upload.wikimedia.org/wikipedia/commons/thumb/b/be/Queen_Street_West_in_Toronto%2C_July_7_2025_%2803%29.jpg/700px-Queen_Street_West_in_Toronto%2C_July_7_2025_%2803%29.jpg","page":"https://commons.wikimedia.org/wiki/File:Queen_Street_West_in_Toronto,_July_7_2025_(03).jpg"},{"url":"https://upload.wikimedia.org/wikipedia/commons/thumb/b/bf/Queen_Street_West_in_Toronto%2C_July_7_2025_%2801%29.jpg/700px-Queen_Street_West_in_Toronto%2C_July_7_2025_%2801%29.jpg","page":"https://commons.wikimedia.org/wiki/File:Queen_Street_West_in_Toronto,_July_7_2025_(01).jpg"}],
+      images: [{"url":"https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Queen_Street_West_in_Toronto%2C_July_7_2025_%2807%29.jpg/960px-Queen_Street_West_in_Toronto%2C_July_7_2025_%2807%29.jpg","page":"https://commons.wikimedia.org/wiki/File:Queen_Street_West_in_Toronto,_July_7_2025_(07).jpg"},{"url":"https://upload.wikimedia.org/wikipedia/commons/thumb/b/be/Queen_Street_West_in_Toronto%2C_July_7_2025_%2803%29.jpg/960px-Queen_Street_West_in_Toronto%2C_July_7_2025_%2803%29.jpg","page":"https://commons.wikimedia.org/wiki/File:Queen_Street_West_in_Toronto,_July_7_2025_(03).jpg"},{"url":"https://upload.wikimedia.org/wikipedia/commons/thumb/b/bf/Queen_Street_West_in_Toronto%2C_July_7_2025_%2801%29.jpg/960px-Queen_Street_West_in_Toronto%2C_July_7_2025_%2801%29.jpg","page":"https://commons.wikimedia.org/wiki/File:Queen_Street_West_in_Toronto,_July_7_2025_(01).jpg"}],
       activities: ["Gallery and street art walk"],
       food: ["Trendy cafés and brunch spots"],
       shops: ["Fashion and concept stores","The AGO gift shop"]
@@ -507,7 +498,7 @@
       coords: [[[43.6509768,-79.4400175],[43.650959,-79.4400107],[43.6508555,-79.4399705],[43.6507785,-79.439942],[43.6507088,-79.4399161],[43.6506496,-79.4398928],[43.6505537,-79.4398563],[43.6505052,-79.4398378],[43.6502882,-79.4397587],[43.6502609,-79.4397497],[43.6501818,-79.4397263],[43.6501675,-79.4397252],[43.6501541,-79.439722],[43.6500848,-79.439709],[43.6497977,-79.4396172],[43.6496709,-79.4395825],[43.6495173,-79.439549],[43.649402,-79.4395309],[43.6493215,-79.4395153],[43.6492576,-79.4395081],[43.6491726,-79.4394986],[43.6491278,-79.4394936],[43.6489726,-79.4394653],[43.6488218,-79.4394296],[43.6487615,-79.439414],[43.6486312,-79.4393804],[43.6479829,-79.4391436],[43.647897,-79.4391212],[43.6478094,-79.4391079],[43.6477053,-79.4391058],[43.6473604,-79.4391198],[43.6462888,-79.4368509],[43.643636,-79.4311626],[43.642707,-79.4290765],[43.6425511,-79.4287324],[43.6423101,-79.4282009],[43.6423523,-79.4275193],[43.6422791,-79.4273372],[43.6421801,-79.4271336],[43.6421625,-79.4270975],[43.6421514,-79.4270756],[43.6420921,-79.4269587],[43.6420067,-79.4267777],[43.6419613,-79.4266386],[43.6418791,-79.4264585],[43.6416607,-79.4259515],[43.6413949,-79.4251656],[43.6411658,-79.4243221],[43.6411401,-79.4242631],[43.6411163,-79.4240881],[43.6410231,-79.4236811],[43.6410372,-79.423669],[43.6410149,-79.4235208],[43.6409931,-79.4233718],[43.6410226,-79.4233287],[43.6410263,-79.4232945],[43.641063,-79.423295],[43.6410726,-79.4232465],[43.6412596,-79.4228328],[43.6412773,-79.4227479],[43.6413838,-79.4222355],[43.6414387,-79.4219619],[43.6414883,-79.4217146],[43.6415023,-79.4216275],[43.6415078,-79.4216293],[43.641582,-79.4216549],[43.642078,-79.4218424],[43.642593,-79.4220372],[43.6430286,-79.4222019],[43.6431193,-79.4222346],[43.6434025,-79.4223391],[43.6434653,-79.4223674],[43.6434812,-79.4223723],[43.6434941,-79.4223775],[43.6435531,-79.4224013],[43.643857,-79.4225143],[43.6439551,-79.4225516],[43.6445529,-79.4227788],[43.6451998,-79.423031],[43.6453623,-79.4230943],[43.6456834,-79.4232231],[43.6461368,-79.4234048],[43.6461918,-79.4234279],[43.6462407,-79.4234466],[43.6466356,-79.4235969],[43.6466856,-79.4236164],[43.6470816,-79.4237711],[43.6474214,-79.4239042],[43.647809,-79.4240561],[43.6488059,-79.4244534],[43.6493567,-79.4246735],[43.6494246,-79.4247077],[43.6494381,-79.4247137],[43.6494535,-79.4247216],[43.6495198,-79.4247579],[43.6496713,-79.4248217],[43.6498221,-79.4248816],[43.649956,-79.4249323],[43.6502335,-79.4250419],[43.6507167,-79.4252372],[43.6508191,-79.4252746],[43.6514312,-79.4255136],[43.6514508,-79.4255205],[43.651699,-79.4256298],[43.6519586,-79.4257349],[43.6522556,-79.4258534],[43.6523272,-79.4258823],[43.6527314,-79.426044],[43.653283,-79.4262539],[43.653543,-79.4263579],[43.6535965,-79.4263817],[43.6536102,-79.4263878],[43.6535869,-79.4264841],[43.6535033,-79.426878],[43.6534247,-79.4272478],[43.6533289,-79.4277112],[43.6532294,-79.4281796],[43.6530977,-79.4288034],[43.652965,-79.4294337],[43.6529449,-79.4295253],[43.6529212,-79.4296377],[43.6529052,-79.4297136],[43.6528857,-79.4298065],[43.6528645,-79.4299277],[43.6528594,-79.4299943],[43.6528633,-79.4300687],[43.6528731,-79.4301512],[43.6528905,-79.4302518],[43.6529085,-79.4303416],[43.6529199,-79.430428],[43.6529255,-79.4304838],[43.6529264,-79.4305804],[43.652925,-79.43063],[43.6529195,-79.4306925],[43.6529109,-79.4307581],[43.6528914,-79.4308685],[43.6528802,-79.4309293],[43.6528549,-79.4310673],[43.6528361,-79.4311631],[43.652726,-79.431686],[43.6526218,-79.4322125],[43.6525761,-79.4324379],[43.6525556,-79.432546],[43.6525353,-79.4326457],[43.65244,-79.4331191],[43.6521504,-79.4345476],[43.6521355,-79.4346218],[43.6520363,-79.435111],[43.6519721,-79.4354271],[43.6518916,-79.4358294],[43.6518523,-79.4360293],[43.65182,-79.4362119],[43.6518005,-79.4363526],[43.6517837,-79.4364591],[43.6517732,-79.4365241],[43.6517037,-79.4368841],[43.6515665,-79.437565],[43.651425,-79.4382648],[43.6513216,-79.4387743],[43.6511626,-79.4395681],[43.6511538,-79.4396118],[43.6511332,-79.4397066],[43.6511258,-79.4397377],[43.6511204,-79.439759],[43.6511017,-79.4398108],[43.6510891,-79.4398381],[43.6510391,-79.4399285],[43.6509768,-79.4400175]]],
       outlineOnly: false,
       history: "Portuguese immigrants began settling around Dundas Street West in the 1950s and 60s, building the churches, social clubs, and cafés that still anchor the community's cultural life here.",
-      images: [{"url":"https://upload.wikimedia.org/wikipedia/commons/thumb/f/fd/Streetlittleportugal.jpg/700px-Streetlittleportugal.jpg","page":"https://commons.wikimedia.org/wiki/File:Streetlittleportugal.jpg"},{"url":"https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/Dundasstreetlittleportugaltoronto.JPG/700px-Dundasstreetlittleportugaltoronto.JPG","page":"https://commons.wikimedia.org/wiki/File:Dundasstreetlittleportugaltoronto.JPG"},{"url":"https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/Padariabrasil.JPG/700px-Padariabrasil.JPG","page":"https://commons.wikimedia.org/wiki/File:Padariabrasil.JPG"}],
+      images: [{"url":"https://upload.wikimedia.org/wikipedia/commons/thumb/f/fd/Streetlittleportugal.jpg/960px-Streetlittleportugal.jpg","page":"https://commons.wikimedia.org/wiki/File:Streetlittleportugal.jpg"},{"url":"https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/Dundasstreetlittleportugaltoronto.JPG/960px-Dundasstreetlittleportugaltoronto.JPG","page":"https://commons.wikimedia.org/wiki/File:Dundasstreetlittleportugaltoronto.JPG"},{"url":"https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/Padariabrasil.JPG/960px-Padariabrasil.JPG","page":"https://commons.wikimedia.org/wiki/File:Padariabrasil.JPG"}],
       activities: ["Dundas West patio-hopping"],
       food: ["Portuguese grilled chicken","Custard tarts (pastel de nata)"],
       shops: ["Independent boutiques and record shops"]
@@ -531,7 +522,7 @@
       coords: [[[43.646256,-79.384731],[43.651255,-79.386712],[43.647944,-79.402669],[43.642945,-79.400688]]],
       outlineOnly: false,
       history: "A former warehouse and garment-factory district, it transformed from the 1980s onward around King Street's theatres — the Royal Alexandra and Princess of Wales — and later the TIFF Bell Lightbox, becoming the city's nightlife and festival hub.",
-      images: [{"url":"https://upload.wikimedia.org/wikipedia/commons/thumb/e/ef/Roy_Thomson_Hall%2C_Toronto%2C_Ontario%2C_2025-08-25.jpg/700px-Roy_Thomson_Hall%2C_Toronto%2C_Ontario%2C_2025-08-25.jpg","page":"https://commons.wikimedia.org/wiki/File:Roy_Thomson_Hall,_Toronto,_Ontario,_2025-08-25.jpg"},{"url":"https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/TIFF_Bell_Lightbox_Facade_%289162244404%29.jpg/700px-TIFF_Bell_Lightbox_Facade_%289162244404%29.jpg","page":"https://commons.wikimedia.org/wiki/File:TIFF_Bell_Lightbox_Facade_(9162244404).jpg"},{"url":"https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Princess_of_Wales_Theatre_2023.jpg/700px-Princess_of_Wales_Theatre_2023.jpg","page":"https://commons.wikimedia.org/wiki/File:Princess_of_Wales_Theatre_2023.jpg"}],
+      images: [{"url":"https://upload.wikimedia.org/wikipedia/commons/thumb/e/ef/Roy_Thomson_Hall%2C_Toronto%2C_Ontario%2C_2025-08-25.jpg/960px-Roy_Thomson_Hall%2C_Toronto%2C_Ontario%2C_2025-08-25.jpg","page":"https://commons.wikimedia.org/wiki/File:Roy_Thomson_Hall,_Toronto,_Ontario,_2025-08-25.jpg"},{"url":"https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/TIFF_Bell_Lightbox_Facade_%289162244404%29.jpg/960px-TIFF_Bell_Lightbox_Facade_%289162244404%29.jpg","page":"https://commons.wikimedia.org/wiki/File:TIFF_Bell_Lightbox_Facade_(9162244404).jpg"},{"url":"https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Princess_of_Wales_Theatre_2023.jpg/960px-Princess_of_Wales_Theatre_2023.jpg","page":"https://commons.wikimedia.org/wiki/File:Princess_of_Wales_Theatre_2023.jpg"}],
       activities: ["Catch a show or concert","Nightlife and clubs"],
       food: ["Pre-theatre dinner spots","Rooftop patios"],
       shops: ["Flagship retail on King St W"]
