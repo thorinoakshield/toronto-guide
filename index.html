@@ -603,7 +603,7 @@
     }
     activeId = null;
     document.querySelectorAll('.item').forEach(el => el.classList.remove('is-active'));
-    map.flyToBounds(oldTorontoBounds, { duration: 0.6 });
+    map.fitBounds(oldTorontoBounds, { animate: false });
     if(isMobile()) setPanelCollapsed(false);
   }
 
@@ -634,7 +634,8 @@
 
     document.querySelectorAll('.item').forEach(el => el.classList.toggle('is-active', el.dataset.id === id));
 
-    map.flyToBounds(layers[id].getBounds(), { padding: [80,80], maxZoom: 16, duration: 0.6 });
+    // animate:false — animated zoom can get stuck permanently against maxBounds (never recovers)
+    map.fitBounds(layers[id].getBounds(), { padding: [80,80], maxZoom: 16, animate: false });
 
     if(isMobile()) setPanelCollapsed(true);
   }
