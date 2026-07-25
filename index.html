@@ -50,7 +50,13 @@
     font-weight:700;
     letter-spacing:-0.01em;
   }
-  .collapse-btn{
+  .panel-head-actions{
+    display:flex;
+    align-items:center;
+    gap:0.3rem;
+    flex:none;
+  }
+  .collapse-btn, .icon-btn{
     border:none;
     background:none;
     cursor:pointer;
@@ -60,12 +66,45 @@
     line-height:1;
     flex:none;
   }
+  .icon-btn:hover, .collapse-btn:hover{ color:var(--ink); }
+  .icon-btn.small{ font-size:0.85rem; }
   .panel-body{
     overflow-y:auto;
     padding:0 0.9rem 0.9rem;
   }
   .panel.is-collapsed .panel-body{ display:none; }
 
+  .panel.is-minimized{
+    width:44px;
+    border-radius:50%;
+  }
+  .panel.is-minimized .panel-head{
+    padding:0;
+    width:44px;
+    height:44px;
+    justify-content:center;
+  }
+  .panel.is-minimized h1,
+  .panel.is-minimized .collapse-btn,
+  .panel.is-minimized .panel-body{
+    display:none;
+  }
+  .panel.is-minimized #minimizeBtn{
+    width:100%;
+    height:100%;
+  }
+
+  .list-head{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    font-size:0.7rem;
+    text-transform:uppercase;
+    letter-spacing:0.08em;
+    color:var(--ink-soft);
+    font-weight:700;
+    margin-top:0.2rem;
+  }
   .list{
     display:flex;
     flex-direction:column;
@@ -74,6 +113,7 @@
     padding-top:0.5rem;
     margin-top:0.6rem;
   }
+  .list.is-collapsed{ display:none; }
   .item{
     display:flex;
     align-items:center;
@@ -237,6 +277,71 @@
     color:#33404d;
   }
 
+  .itin-banner{
+    position:absolute;
+    top:16px;
+    left:50%;
+    transform:translateX(-50%);
+    z-index:1000;
+    width:min(340px, calc(100vw - 800px));
+    min-width:260px;
+    background:var(--paper);
+    border-radius:16px;
+    box-shadow:0 16px 40px rgba(20,20,15,0.22), 0 0 0 1px rgba(20,20,15,0.05);
+    padding:0.7rem 0.9rem;
+  }
+  .itin-banner-head{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+  }
+  .itin-banner-head h2{
+    font-size:0.9rem;
+    margin:0;
+    font-weight:700;
+  }
+  .itin-banner-body{
+    display:flex;
+    gap:6px;
+    margin-top:0.6rem;
+  }
+  .itin-banner.is-collapsed .itin-banner-body{ display:none; }
+  .itin-btn{
+    flex:1;
+    padding:0.4rem 0.3rem;
+    border-radius:8px;
+    border:1.5px solid #d8c9ae;
+    background:#fff;
+    font-size:0.76rem;
+    font-family:inherit;
+    cursor:pointer;
+    color:var(--ink);
+  }
+  .itin-btn:hover{ border-color:var(--ink); }
+  .itin-btn.is-active{
+    background:var(--ink);
+    color:#fff;
+    border-color:var(--ink);
+  }
+  .itin-btn:focus-visible{ outline:2px solid var(--ink); outline-offset:1px; }
+
+  .itin-card{
+    margin-top:0.9rem;
+    padding-top:0.9rem;
+    border-top:1px solid var(--line);
+  }
+  .itin-card:first-of-type{
+    margin-top:0.7rem;
+    padding-top:0;
+    border-top:none;
+  }
+  .itin-card h3{
+    font-size:1rem;
+    margin:0 0 0.5rem;
+    padding-bottom:0.3rem;
+    border-bottom:3px solid;
+  }
+
   .locate-btn{
     position:absolute;
     bottom:8px;
@@ -282,7 +387,8 @@
   }
 
   @media (max-width:640px){
-    .panel{ top:10px; left:10px; width:calc(100vw - 20px); max-height:42vh; }
+    .itin-banner{ top:10px; left:10px; right:10px; transform:none; width:auto; min-width:0; }
+    .panel{ top:66px; left:10px; width:calc(100vw - 20px); max-height:36vh; }
     .popup{
       top:auto; right:10px; bottom:10px; left:10px;
       width:calc(100vw - 20px); max-width:none;
@@ -315,9 +421,16 @@
 <div class="panel" id="panel">
   <div class="panel-head">
     <h1>Toronto</h1>
-    <button class="collapse-btn" id="collapseBtn" aria-label="Collapse panel">&#9650;</button>
+    <div class="panel-head-actions">
+      <button class="icon-btn" id="minimizeBtn" title="Minimize" aria-label="Minimize panel">&#8211;</button>
+      <button class="collapse-btn" id="collapseBtn" aria-label="Collapse panel">&#9650;</button>
+    </div>
   </div>
   <div class="panel-body" id="panelBody">
+    <div class="list-head">
+      <span>Neighbourhoods</span>
+      <button class="icon-btn small" id="listCollapseBtn" aria-label="Collapse neighbourhood list">&#9650;</button>
+    </div>
     <div class="list" id="list"></div>
     <div class="overview" id="overview">
       <h2 id="overviewTitle">Neighbourhood</h2>
@@ -326,6 +439,19 @@
       <h3>History</h3>
       <p id="overviewHistory"></p>
     </div>
+  </div>
+</div>
+
+<div class="itin-banner" id="itinBanner">
+  <div class="itin-banner-head">
+    <h2>Itineraries</h2>
+    <button class="icon-btn" id="itinCollapseBtn" aria-label="Collapse itineraries">&#9650;</button>
+  </div>
+  <div class="itin-banner-body" id="itinBannerBody">
+    <button class="itin-btn" data-option="option1" type="button" aria-pressed="false">Option 1</button>
+    <button class="itin-btn" data-option="option2" type="button" aria-pressed="false">Option 2</button>
+    <button class="itin-btn" data-option="option3" type="button" aria-pressed="false">Option 3</button>
+    <button class="itin-btn" data-option="option4" type="button" aria-pressed="false">Option 4</button>
   </div>
 </div>
 
@@ -346,6 +472,12 @@
   </div>
 </div>
 
+<div class="popup itin-stack" id="itineraryStack">
+  <button class="popup-close" id="itineraryStackClose" aria-label="Close itinerary">&times;</button>
+  <h2 id="itineraryStackTitle">Itinerary</h2>
+  <div id="itineraryCards"></div>
+</div>
+
 <div class="attrib-note">Scoped to the old City of Toronto — panning stops at its edges.</div>
 <button class="locate-btn" id="locateBtn" title="Show my location" aria-label="Show my location">&#8982;</button>
 <div class="locate-note" id="locateNote"></div>
@@ -361,8 +493,10 @@
     maxBounds: oldTorontoBounds.pad(0.03),
     maxBoundsViscosity: 1.0,
     minZoom: 12,
-    maxZoom: 18
+    maxZoom: 18,
+    zoomControl: false
   });
+  L.control.zoom({ position: 'bottomleft' }).addTo(map);
   map.fitBounds(oldTorontoBounds);
 
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -624,6 +758,17 @@
   }
 
   function select(id){
+    if(activeItineraryOption){
+      const itin = ITINERARIES[activeItineraryOption];
+      if(itin && itin.order.includes(id)){
+        const card = document.getElementById('itinCard-' + id);
+        if(card) card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        document.querySelectorAll('.item').forEach(el => el.classList.toggle('is-active', el.dataset.id === id));
+        return;
+      }
+      deactivateItinerary();
+    }
+
     if(id === activeId){
       closePopup();
       return;
@@ -673,6 +818,137 @@
     collapseBtn.innerHTML = collapsed ? '&#9660;' : '&#9650;';
   }
   collapseBtn.addEventListener('click', () => setPanelCollapsed(!panelEl.classList.contains('is-collapsed')));
+
+  // --- minimize toggle for left panel (hides the whole panel, header included) ---
+  const minimizeBtn = document.getElementById('minimizeBtn');
+  minimizeBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    panelEl.classList.toggle('is-minimized');
+  });
+
+  // --- independent collapse for the neighbourhood list only ---
+  const listEl = document.getElementById('list');
+  const listCollapseBtn = document.getElementById('listCollapseBtn');
+  listCollapseBtn.addEventListener('click', () => {
+    const collapsed = listEl.classList.toggle('is-collapsed');
+    listCollapseBtn.innerHTML = collapsed ? '&#9660;' : '&#9650;';
+  });
+
+  // --- itineraries ---
+  // Preset, hand-curated groupings. Only option1 is implemented; option2-4 are placeholders
+  // (they toggle their own pressed state but have no effect on the map yet).
+  const ITINERARIES = {
+    option1: {
+      order: ['chinatown', 'kensington', 'littleitaly'],
+      colors: { chinatown: '#7a1414', kensington: '#c0392b', littleitaly: '#e8a3a3' }
+    }
+  };
+  const ITIN_GRAY = '#9a9a9a';
+  let activeItineraryOption = null;
+
+  function fullRestingStyle(hood){
+    return Object.assign({ color: hood.color, fillColor: hood.color }, restingStyle(hood));
+  }
+
+  function resetAllNeighbourhoodStyles(){
+    neighbourhoods.forEach(hood => layers[hood.id].setStyle(fullRestingStyle(hood)));
+  }
+
+  function unionBounds(ids){
+    let b = null;
+    ids.forEach(id => {
+      const lb = layers[id].getBounds();
+      b = b ? b.extend(lb) : L.latLngBounds(lb.getSouthWest(), lb.getNorthEast());
+    });
+    return b;
+  }
+
+  const itineraryStack = document.getElementById('itineraryStack');
+  const itineraryCards = document.getElementById('itineraryCards');
+
+  function renderItineraryStack(key){
+    const itin = ITINERARIES[key];
+    itineraryCards.innerHTML = itin.order.map(id => {
+      const hood = neighbourhoods.find(h => h.id === id);
+      const c = itin.colors[id];
+      return '<div class="itin-card" id="itinCard-' + id + '">'
+        + '<h3 style="border-color:' + c + '">' + hood.name + '</h3>'
+        + '<div class="popup-section" style="margin-top:0;padding-top:0;border-top:none;">'
+        + '<h3 style="font-size:0.7rem;text-transform:uppercase;letter-spacing:0.08em;border:none;padding:0;margin:0 0 0.35rem;color:var(--ink-soft);">Activities</h3>'
+        + '<ul>' + hood.activities.map(a => '<li>' + a + '</li>').join('') + '</ul></div>'
+        + '<div class="popup-section">'
+        + '<h3 style="font-size:0.7rem;text-transform:uppercase;letter-spacing:0.08em;border:none;padding:0;margin:0 0 0.35rem;color:var(--ink-soft);">Food</h3>'
+        + '<ul>' + hood.food.map(f => '<li>' + f + '</li>').join('') + '</ul></div>'
+        + '<div class="popup-section">'
+        + '<h3 style="font-size:0.7rem;text-transform:uppercase;letter-spacing:0.08em;border:none;padding:0;margin:0 0 0.35rem;color:var(--ink-soft);">Shops</h3>'
+        + '<ul>' + hood.shops.map(s => '<li>' + s + '</li>').join('') + '</ul></div>'
+        + '</div>';
+    }).join('');
+    itineraryStack.classList.add('is-open');
+  }
+
+  function activateItinerary(key){
+    activeItineraryOption = key;
+    setItineraryButtonsUI();
+
+    if(key === 'option1'){
+      const itin = ITINERARIES.option1;
+      neighbourhoods.forEach(hood => {
+        if(itin.order.includes(hood.id)){
+          layers[hood.id].setStyle({ color: itin.colors[hood.id], fillColor: itin.colors[hood.id], weight: 3.5, opacity: 1, fillOpacity: 0.55 });
+          layers[hood.id].bringToFront();
+        } else {
+          layers[hood.id].setStyle({ color: ITIN_GRAY, fillColor: ITIN_GRAY, weight: 2, opacity: 0.85, fillOpacity: 0.4 });
+        }
+      });
+      renderItineraryStack('option1');
+      safeFitBounds(unionBounds(itin.order), { padding: [70,70] });
+    }
+  }
+
+  function deactivateItinerary(){
+    if(activeItineraryOption === 'option1'){
+      resetAllNeighbourhoodStyles();
+      itineraryStack.classList.remove('is-open');
+      safeFitBounds(oldTorontoBounds, {});
+    }
+    activeItineraryOption = null;
+    setItineraryButtonsUI();
+  }
+
+  function setItineraryButtonsUI(){
+    document.querySelectorAll('.itin-btn').forEach(b => {
+      const pressed = b.dataset.option === activeItineraryOption;
+      b.classList.toggle('is-active', pressed);
+      b.setAttribute('aria-pressed', pressed ? 'true' : 'false');
+    });
+  }
+
+  document.querySelectorAll('.itin-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const key = btn.dataset.option;
+      if(activeId) closePopup();
+      if(activeItineraryOption === key){
+        deactivateItinerary();
+      } else {
+        if(activeItineraryOption) deactivateItinerary();
+        activateItinerary(key);
+      }
+    });
+  });
+
+  document.getElementById('itineraryStackClose').addEventListener('click', deactivateItinerary);
+
+  const itinBanner = document.getElementById('itinBanner');
+  const itinCollapseBtn = document.getElementById('itinCollapseBtn');
+  itinCollapseBtn.addEventListener('click', () => {
+    const collapsed = itinBanner.classList.toggle('is-collapsed');
+    itinCollapseBtn.innerHTML = collapsed ? '&#9660;' : '&#9650;';
+  });
+  if(isMobile()){
+    itinBanner.classList.add('is-collapsed');
+    itinCollapseBtn.innerHTML = '&#9660;';
+  }
 
   // --- geolocation ---
   const locateBtn = document.getElementById('locateBtn');
