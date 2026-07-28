@@ -28,7 +28,7 @@
     top:16px;
     left:16px;
     z-index:1000;
-    width:360px;
+    width:288px;
     max-width:calc(100vw - 32px);
     max-height:calc(100vh - 32px);
     display:flex;
@@ -645,7 +645,10 @@
     zoomControl: false
   });
   L.control.zoom({ position: 'bottomleft' }).addTo(map);
-  map.fitBounds(oldTorontoBounds);
+  const panelEl = document.getElementById('panel');
+  let lastFitBounds = null;
+  let lastFitOptions = null;
+  safeFitBounds(oldTorontoBounds, {});
 
   L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
@@ -1288,14 +1291,32 @@
   // CSS transitionend event to unlock the map, and that event can fail to fire (browser/GPU
   // dependent) — when it does, the map gets stuck mid-animation forever. _stop() before AND
   // after clears that lock; the watchdog forces a snap-to-target if the animation never settles.
+  // Extra left padding so fitted content doesn't sit under the neighbourhood panel.
+  // Reads the panel's live rendered width, so it shrinks automatically when the
+  // panel is minimized (or vanishes on mobile, where the panel sits above the map).
+  function panelLeftPadding(){
+    if(isMobile()) return 0;
+    const rect = panelEl.getBoundingClientRect();
+    return rect.width + rect.left + 20;
+  }
+
   function safeFitBounds(bounds, options){
+    lastFitBounds = bounds;
+    lastFitOptions = options;
+    const opts = Object.assign({}, options);
+    if(opts.padding){
+      const [px, py] = opts.padding;
+      opts.paddingTopLeft = [px + panelLeftPadding(), py];
+      opts.paddingBottomRight = [px, py];
+      delete opts.padding;
+    }
     map._stop();
-    map.fitBounds(bounds, Object.assign({}, options, { animate: true }));
+    map.fitBounds(bounds, Object.assign({}, opts, { animate: true }));
     clearTimeout(safeFitBounds._watchdog);
     safeFitBounds._watchdog = setTimeout(() => {
       if(map._animatingZoom){
         map._stop();
-        map.fitBounds(bounds, Object.assign({}, options, { animate: false }));
+        map.fitBounds(bounds, Object.assign({}, opts, { animate: false }));
       }
     }, 900);
   }
@@ -1365,7 +1386,7 @@
 
     document.querySelectorAll('.item').forEach(el => el.classList.toggle('is-active', el.dataset.id === id));
 
-    safeFitBounds(layers[id].getBounds(), { padding: [80,80], maxZoom: 16 });
+    safeFitBounds(layers[id].getBounds(), { padding: [110,110], maxZoom: 15.5 });
 
     if(isMobile()) setPanelCollapsed(true);
   }
@@ -1381,7 +1402,6 @@
   updateLabelVisibility();
 
   // --- collapse toggle for left panel ---
-  const panelEl = document.getElementById('panel');
   const collapseBtn = document.getElementById('collapseBtn');
   function setPanelCollapsed(collapsed){
     panelEl.classList.toggle('is-collapsed', collapsed);
@@ -1394,6 +1414,7 @@
   minimizeBtn.addEventListener('click', (e) => {
     e.stopPropagation();
     panelEl.classList.toggle('is-minimized');
+    if(lastFitBounds) safeFitBounds(lastFitBounds, lastFitOptions);
   });
 
   // --- independent collapse for the neighbourhood list only ---
