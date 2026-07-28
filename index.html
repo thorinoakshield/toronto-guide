@@ -319,6 +319,11 @@
   .pick{
     padding-bottom:0.8rem;
     border-bottom:1px solid var(--line);
+    border-radius:8px;
+    transition:background-color 0.3s ease;
+  }
+  .pick.is-flashed{
+    background-color:#eee7d6;
   }
   .pick:last-child{
     border-bottom:none;
@@ -1148,7 +1153,7 @@
     const photos = (pick.photos || []).map(src =>
       '<img src="' + src + '" alt="' + pick.name + '">'
     ).join('');
-    return '<div class="pick">' +
+    return '<div class="pick" id="pickCard-' + num + '">' +
       '<div class="pick-header"><span class="pick-number ' + categoryClass(pick) + '">' + num + '</span><p class="pick-name">' + pick.name + '</p></div>' +
       '<p class="pick-note">' + pick.note + '</p>' +
       flag +
@@ -1177,9 +1182,26 @@
         iconSize: [22,22],
         iconAnchor: [11,11]
       });
-      const marker = L.marker(pick.coords, { icon, keyboard: false, interactive: false }).addTo(map);
+      const marker = L.marker(pick.coords, { icon, keyboard: false, interactive: true }).addTo(map);
+      marker.on('click', () => highlightPick(num));
       pickMarkers.push(marker);
     });
+  }
+
+  let highlightTimeout = null;
+  function highlightPick(num){
+    const card = document.getElementById('pickCard-' + num);
+    if(!card) return;
+    const section = card.closest('.pick-section');
+    if(section && section.classList.contains('is-collapsed')){
+      section.classList.remove('is-collapsed');
+      section.querySelector('.pick-section-toggle').setAttribute('aria-expanded', 'true');
+    }
+    document.querySelectorAll('.pick.is-flashed').forEach(el => el.classList.remove('is-flashed'));
+    card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    card.classList.add('is-flashed');
+    clearTimeout(highlightTimeout);
+    highlightTimeout = setTimeout(() => card.classList.remove('is-flashed'), 1600);
   }
 
   function isMobile(){
