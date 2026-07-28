@@ -690,6 +690,14 @@
           note: "Toronto's benchmark smokehouse — go for the brisket and ribs, and expect a wait.",
           photos: ["https://upload.wikimedia.org/wikipedia/commons/thumb/8/81/Podnah%27s_Pit_Barbecue_3.jpg/960px-Podnah%27s_Pit_Barbecue_3.jpg"],
           coords: [43.6479972,-79.449358]
+        },
+        {
+          name: "Walk High Park Boulevard",
+          category: "activity",
+          note: "A short, quiet street of grand Edwardian and Victorian mansions right at High Park's east gate — one of the prettiest blocks in the city.",
+          photos: ["https://upload.wikimedia.org/wikipedia/commons/thumb/0/03/High_Park_Boulevard_%26_Parkside_Drive_%2823707306538%29.jpg/960px-High_Park_Boulevard_%26_Parkside_Drive_%2823707306538%29.jpg"],
+          path: [[43.6448830,-79.4562391],[43.6458649,-79.4513206]],
+          coords: [43.6453782,-79.4537805]
         }
       ]
     },
@@ -732,6 +740,14 @@
           category: "restaurant",
           note: "A Vietnamese micro-bakery just west of Koreatown — small-batch pastries, worth the short walk.",
           coords: [43.6627861,-79.4225521]
+        },
+        {
+          name: "Walk Palmerston Boulevard",
+          category: "activity",
+          note: "Stone gateways at Bloor and College bookend this maple-canopied stretch of Victorian and Edwardian mansions — one of Toronto's most storied residential streets.",
+          photos: ["https://upload.wikimedia.org/wikipedia/commons/thumb/9/99/Palmerston_Boulevard.jpg/960px-Palmerston_Boulevard.jpg"],
+          path: [[43.6593228,-79.4101605],[43.6559657,-79.4115140]],
+          coords: [43.6576450,-79.4108350]
         }
       ]
     },
@@ -1225,6 +1241,16 @@
   function renderPickMarkers(cats){
     clearPickMarkers();
     [].concat(cats.restaurants, cats.bars, cats.activities, cats.shops).forEach(({ pick, num }) => {
+      if(pick.path){
+        const line = L.polyline(pick.path, {
+          color: '#f2d98a',
+          weight: 7,
+          opacity: 0.75,
+          lineCap: 'round'
+        }).addTo(map);
+        line.on('click', () => highlightPick(num));
+        pickMarkers.push(line);
+      }
       if(!pick.coords) return;
       const icon = L.divIcon({
         className: 'pick-marker-icon',
