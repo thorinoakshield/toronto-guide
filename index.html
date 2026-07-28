@@ -1233,7 +1233,13 @@
     }
     activeId = null;
     document.querySelectorAll('.item').forEach(el => el.classList.remove('is-active'));
-    safeFitBounds(oldTorontoBounds, {});
+    const itin = ITINERARIES[activeItineraryOption];
+    if(itin){
+      itineraryStack.classList.add('is-open');
+      safeFitBounds(unionBounds(itin.order), { padding: [70,70] });
+    } else {
+      safeFitBounds(oldTorontoBounds, {});
+    }
     if(isMobile()) setPanelCollapsed(false);
   }
 
@@ -1241,12 +1247,13 @@
     if(activeItineraryOption){
       const itin = ITINERARIES[activeItineraryOption];
       if(itin && itin.order.includes(id)){
-        const card = document.getElementById('itinCard-' + id);
-        if(card) card.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        document.querySelectorAll('.item').forEach(el => el.classList.toggle('is-active', el.dataset.id === id));
-        return;
+        // Neighbourhood is part of the active itinerary: open it like normal, but
+        // leave the itinerary's purple/red highlight coloring on the map untouched
+        // (the styling calls below only ever touch weight/opacity, never color).
+        itineraryStack.classList.remove('is-open');
+      } else {
+        deactivateItinerary();
       }
-      deactivateItinerary();
     }
 
     if(id === activeId){
