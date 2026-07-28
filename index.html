@@ -348,10 +348,43 @@
     justify-content:center;
     transform:translateY(1px);
   }
-  .pick-number.cat-activity, .pick-marker.cat-activity{ background:#c1752e; }
-  .pick-number.cat-shop, .pick-marker.cat-shop{ background:#3b6ea5; }
-  .pick-number.cat-restaurant, .pick-marker.cat-restaurant{ background:#a83e3e; }
-  .pick-number.cat-bar, .pick-marker.cat-bar{ background:#3f8a4c; }
+  .pick-number.cat-activity, .pick-marker.cat-activity, .legend-dot.cat-activity{ background:#c1752e; }
+  .pick-number.cat-shop, .pick-marker.cat-shop, .legend-dot.cat-shop{ background:#3b6ea5; }
+  .pick-number.cat-restaurant, .pick-marker.cat-restaurant, .legend-dot.cat-restaurant{ background:#a83e3e; }
+  .pick-number.cat-bar, .pick-marker.cat-bar, .legend-dot.cat-bar{ background:#3f8a4c; }
+
+  .legend{
+    margin-top:0.7rem;
+    padding-top:0.7rem;
+    border-top:1px solid var(--line);
+  }
+  .legend-head{
+    font-size:0.7rem;
+    text-transform:uppercase;
+    letter-spacing:0.08em;
+    color:var(--ink-soft);
+    font-weight:700;
+    margin:0 0 0.5rem;
+  }
+  .legend-items{
+    display:flex;
+    flex-wrap:wrap;
+    gap:0.4rem 0.9rem;
+  }
+  .legend-item{
+    display:flex;
+    align-items:center;
+    gap:0.4rem;
+    font-size:0.78rem;
+    color:var(--ink);
+  }
+  .legend-dot{
+    width:10px;
+    height:10px;
+    border-radius:50%;
+    flex:none;
+    box-shadow:0 0 0 2px rgba(0,0,0,0.06);
+  }
   .pick-name{
     font-size:0.85rem;
     font-weight:700;
@@ -559,6 +592,15 @@
       <button class="icon-btn small" id="listCollapseBtn" aria-label="Collapse neighbourhood list">&#9650;</button>
     </div>
     <div class="list" id="list"></div>
+    <div class="legend">
+      <p class="legend-head">Marker key</p>
+      <div class="legend-items">
+        <span class="legend-item"><span class="legend-dot cat-restaurant"></span>Restaurant</span>
+        <span class="legend-item"><span class="legend-dot cat-bar"></span>Bar/Club</span>
+        <span class="legend-item"><span class="legend-dot cat-activity"></span>Activity</span>
+        <span class="legend-item"><span class="legend-dot cat-shop"></span>Shop</span>
+      </div>
+    </div>
     <div class="overview" id="overview">
       <h2 id="overviewTitle">Neighbourhood</h2>
       <div class="overview-photos" id="overviewPhotos"></div>
