@@ -637,7 +637,7 @@
   );
 
   const map = L.map('map', {
-    maxBounds: oldTorontoBounds.pad(0.03),
+    maxBounds: oldTorontoBounds.pad(0.25),
     maxBoundsViscosity: 1.0,
     minZoom: 12,
     maxZoom: 18,
@@ -1243,7 +1243,7 @@
     [].concat(cats.restaurants, cats.bars, cats.activities, cats.shops).forEach(({ pick, num }) => {
       if(pick.path){
         const line = L.polyline(pick.path, {
-          color: '#f2d98a',
+          color: '#f3ab68',
           weight: 7,
           opacity: 0.75,
           lineCap: 'round'
