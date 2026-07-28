@@ -277,6 +277,124 @@
     color:#33404d;
   }
 
+  .pick-section-toggle{
+    width:100%;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    background:none;
+    border:none;
+    padding:0;
+    margin:0;
+    font-family:inherit;
+    font-size:0.7rem;
+    text-transform:uppercase;
+    letter-spacing:0.08em;
+    color:var(--ink-soft);
+    font-weight:700;
+    cursor:pointer;
+  }
+  .pick-section-toggle:hover{ color:var(--ink); }
+  .pick-section-toggle:focus-visible{ outline:2px solid var(--ink); outline-offset:2px; }
+  .pick-section-toggle .chevron{
+    font-size:0.55rem;
+    transition:transform 0.2s ease;
+  }
+  .pick-section.is-collapsed .pick-section-toggle .chevron{
+    transform:rotate(180deg);
+  }
+  .pick-section-body{
+    display:flex;
+    flex-direction:column;
+    gap:0.8rem;
+    margin-top:0.65rem;
+  }
+  .pick-section.is-collapsed .pick-section-body{
+    display:none;
+  }
+  .pick-section.is-empty{
+    display:none;
+  }
+
+  .pick{
+    padding-bottom:0.8rem;
+    border-bottom:1px solid var(--line);
+  }
+  .pick:last-child{
+    border-bottom:none;
+    padding-bottom:0;
+  }
+  .pick-header{
+    display:flex;
+    align-items:baseline;
+    gap:0.4rem;
+  }
+  .pick-number{
+    flex:none;
+    width:17px;
+    height:17px;
+    border-radius:50%;
+    background:var(--ink);
+    color:#fff;
+    font-size:0.62rem;
+    font-weight:700;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    transform:translateY(1px);
+  }
+  .pick-name{
+    font-size:0.85rem;
+    font-weight:700;
+    margin:0;
+  }
+  .pick-note{
+    font-size:0.8rem;
+    line-height:1.5;
+    margin:0.2rem 0 0;
+    color:#33404d;
+  }
+  .pick-flag{
+    display:inline-block;
+    margin-top:0.35rem;
+    font-size:0.65rem;
+    font-weight:700;
+    text-transform:uppercase;
+    letter-spacing:0.03em;
+    color:#8a3b3b;
+    background:#fbeaea;
+    padding:2px 7px;
+    border-radius:999px;
+  }
+  .pick-photos{
+    display:flex;
+    gap:6px;
+    margin-top:0.5rem;
+  }
+  .pick-photos img{
+    flex:1;
+    width:0;
+    aspect-ratio:1;
+    object-fit:cover;
+    border-radius:8px;
+    background:var(--line);
+  }
+
+  .pick-marker{
+    width:22px;
+    height:22px;
+    border-radius:50%;
+    background:var(--ink);
+    color:#fff;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-family:system-ui,-apple-system,"Segoe UI",sans-serif;
+    font-size:11px;
+    font-weight:700;
+    box-shadow:0 2px 6px rgba(0,0,0,0.35), 0 0 0 2px #fff;
+  }
+
   .itin-banner{
     position:absolute;
     top:16px;
@@ -458,17 +576,29 @@
 <div class="popup" id="popup">
   <button class="popup-close" id="popupClose" aria-label="Close">&times;</button>
   <h2 id="popupTitle">Neighbourhood</h2>
-  <div class="popup-section">
-    <h3>Activities</h3>
-    <ul id="popupActivities"></ul>
+
+  <div class="popup-section pick-section" id="sectionRestaurants">
+    <button class="pick-section-toggle" aria-expanded="true">
+      <span>Restaurants</span>
+      <span class="chevron">&#9650;</span>
+    </button>
+    <div class="pick-section-body" id="picksRestaurants"></div>
   </div>
-  <div class="popup-section">
-    <h3>Food</h3>
-    <ul id="popupFood"></ul>
+
+  <div class="popup-section pick-section" id="sectionActivities">
+    <button class="pick-section-toggle" aria-expanded="true">
+      <span>Activities</span>
+      <span class="chevron">&#9650;</span>
+    </button>
+    <div class="pick-section-body" id="picksActivities"></div>
   </div>
-  <div class="popup-section">
-    <h3>Shops</h3>
-    <ul id="popupShops"></ul>
+
+  <div class="popup-section pick-section" id="sectionShops">
+    <button class="pick-section-toggle" aria-expanded="true">
+      <span>Shops</span>
+      <span class="chevron">&#9650;</span>
+    </button>
+    <div class="pick-section-body" id="picksShops"></div>
   </div>
 </div>
 
@@ -512,10 +642,7 @@
       coords: [[[43.6563318,-79.4524437],[43.6562365,-79.4524201],[43.655237,-79.4521677],[43.6551365,-79.4521423],[43.6550279,-79.4521145],[43.6547323,-79.4520356],[43.6540775,-79.4518646],[43.6539639,-79.4518363],[43.6539128,-79.4518245],[43.653665,-79.4517653],[43.6535538,-79.4517344],[43.6530063,-79.4515694],[43.6525052,-79.4514166],[43.6519435,-79.4512276],[43.6410766,-79.4470161],[43.6390375,-79.4462192],[43.6389311,-79.4461895],[43.6388691,-79.446186],[43.6388066,-79.4461905],[43.6387154,-79.4462194],[43.6394903,-79.4422232],[43.642228,-79.4286157],[43.6423101,-79.4282009],[43.6425511,-79.4287324],[43.642707,-79.4290765],[43.643636,-79.4311626],[43.6462888,-79.4368509],[43.6473604,-79.4391198],[43.6485355,-79.4410189],[43.6491042,-79.4418316],[43.6499494,-79.4429433],[43.6506442,-79.4437212],[43.6509031,-79.4440166],[43.6568596,-79.4498444],[43.6567686,-79.4502434],[43.6565659,-79.4512195],[43.6564938,-79.4516619],[43.6563657,-79.4522796],[43.6563347,-79.4524297],[43.6563318,-79.4524437]]],
       outlineOnly: false,
       history: "Named after the Battle of Roncesvalles in Spain, the avenue grew up as a streetcar shopping strip in the early 1900s. Waves of Polish immigration after the Second World War gave it the nickname “Little Poland,” and it still hosts one of the city's biggest Polish festivals every September.",
-      images: [{"url":"https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Roncesvalles_Avenue_outside_the_United_Church.jpg/960px-Roncesvalles_Avenue_outside_the_United_Church.jpg","page":"https://commons.wikimedia.org/wiki/File%3ARoncesvalles_Avenue_outside_the_United_Church.jpg"},{"url":"https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Snow_removal_on_Roncesvalles_Avenue%2C_February_2026.jpg/960px-Snow_removal_on_Roncesvalles_Avenue%2C_February_2026.jpg","page":"https://commons.wikimedia.org/wiki/File%3ASnow_removal_on_Roncesvalles_Avenue%2C_February_2026.jpg"},{"url":"https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Roncesvalles_Looking_South.jpg/960px-Roncesvalles_Looking_South.jpg","page":"https://commons.wikimedia.org/wiki/File%3ARoncesvalles_Looking_South.jpg"}],
-      activities: ["Stroll the tree-lined avenue","Catch a film at the Revue Cinema"],
-      food: ["Polish comfort food and bakeries","Neighbourhood coffee shops"],
-      shops: ["Indie bookshops","Vintage furniture and home goods"]
+      images: [{"url":"https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Roncesvalles_Avenue_outside_the_United_Church.jpg/960px-Roncesvalles_Avenue_outside_the_United_Church.jpg","page":"https://commons.wikimedia.org/wiki/File%3ARoncesvalles_Avenue_outside_the_United_Church.jpg"},{"url":"https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Snow_removal_on_Roncesvalles_Avenue%2C_February_2026.jpg/960px-Snow_removal_on_Roncesvalles_Avenue%2C_February_2026.jpg","page":"https://commons.wikimedia.org/wiki/File%3ASnow_removal_on_Roncesvalles_Avenue%2C_February_2026.jpg"},{"url":"https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Roncesvalles_Looking_South.jpg/960px-Roncesvalles_Looking_South.jpg","page":"https://commons.wikimedia.org/wiki/File%3ARoncesvalles_Looking_South.jpg"}]
     },
     {
       id: 'littleitaly',
@@ -525,9 +652,15 @@
       outlineOnly: false,
       history: "College Street became the heart of Toronto's Italian community through waves of postwar immigration, and its espresso-bar culture followed. The strip is famous for spontaneous street parties whenever Italy wins a big match — traffic simply stops.",
       images: [{"url":"https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/College_Street_at_Clinton_Street_in_Toronto%2C_July_5_2026_%2801%29.jpg/960px-College_Street_at_Clinton_Street_in_Toronto%2C_July_5_2026_%2801%29.jpg","page":"https://commons.wikimedia.org/wiki/File:College_Street_at_Clinton_Street_in_Toronto,_July_5_2026_(01).jpg"},{"url":"https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/College_Street_in_Little_Italy%2C_Toronto%2C_September_27_2025_%2805%29.jpg/960px-College_Street_in_Little_Italy%2C_Toronto%2C_September_27_2025_%2805%29.jpg","page":"https://commons.wikimedia.org/wiki/File%3ACollege_Street_in_Little_Italy%2C_Toronto%2C_September_27_2025_(05).jpg"},{"url":"https://upload.wikimedia.org/wikipedia/commons/thumb/b/ba/Toronto_Little_Italy_23_%288439722583%29.jpg/960px-Toronto_Little_Italy_23_%288439722583%29.jpg","page":"https://commons.wikimedia.org/wiki/File%3AToronto_Little_Italy_23_(8439722583).jpg"}],
-      activities: ["Patio-hop along College St","Catch a game at a sports bar"],
-      food: ["Espresso bars and trattorias","Gelato for the walk home"],
-      shops: ["Small boutiques and specialty grocers"]
+      picks: [
+        {
+          name: "Riviera Bakery",
+          category: "restaurant",
+          note: "Italian baked goods — get the sfogliatelle.",
+          photos: ["images/riviera-bakery.jpg"],
+          coords: [43.65558,-79.41317]
+        }
+      ]
     },
     {
       id: 'koreatown',
@@ -537,9 +670,6 @@
       outlineOnly: false,
       history: "Korean immigrants began settling along this stretch of Bloor Street in the 1970s, and it grew into one of the largest concentrations of Korean businesses outside Korea itself — still anchored by the original wave of family-run restaurants.",
       images: [{"url":"https://upload.wikimedia.org/wikipedia/commons/thumb/f/fe/Koreatown%2C_Bloor_Street%2C_Toronto_%282025-01-12%29_05.jpg/960px-Koreatown%2C_Bloor_Street%2C_Toronto_%282025-01-12%29_05.jpg","page":"https://commons.wikimedia.org/wiki/File%3AKoreatown%2C_Bloor_Street%2C_Toronto_(2025-01-12)_05.jpg"},{"url":"https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/Koreatown%2C_Bloor_Street%2C_Toronto_%282025-01-12%29_04.jpg/960px-Koreatown%2C_Bloor_Street%2C_Toronto_%282025-01-12%29_04.jpg","page":"https://commons.wikimedia.org/wiki/File%3AKoreatown%2C_Bloor_Street%2C_Toronto_(2025-01-12)_04.jpg"},{"url":"https://upload.wikimedia.org/wikipedia/commons/thumb/7/70/Koreatown%2C_Bloor_Street%2C_Toronto_%282025-01-12%29_02.jpg/960px-Koreatown%2C_Bloor_Street%2C_Toronto_%282025-01-12%29_02.jpg","page":"https://commons.wikimedia.org/wiki/File%3AKoreatown%2C_Bloor_Street%2C_Toronto_(2025-01-12)_02.jpg"}],
-      activities: ["Karaoke room with a group","Late-night wander down Bloor"],
-      food: ["Korean BBQ","Soft tofu soup (sundubu-jjigae)"],
-      shops: ["K-beauty shops","Korean grocery stores"]
     },
     {
       id: 'kensington',
@@ -549,9 +679,28 @@
       outlineOnly: false,
       history: "Originally a Jewish immigrant garment district in the early 1900s, the market's rowhouse storefronts were later shaped by Portuguese, Caribbean, and East Asian communities. It's now a National Historic Site of Canada — recognized for exactly the layered, improvised character it still has today.",
       images: [{"url":"https://upload.wikimedia.org/wikipedia/commons/thumb/e/ef/Kensington_Market_Toronto_August_2017_01.jpg/960px-Kensington_Market_Toronto_August_2017_01.jpg","page":"https://commons.wikimedia.org/wiki/File%3AKensington_Market_Toronto_August_2017_01.jpg"},{"url":"https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Kensington_Market_Toronto_August_2017_04.jpg/960px-Kensington_Market_Toronto_August_2017_04.jpg","page":"https://commons.wikimedia.org/wiki/File%3AKensington_Market_Toronto_August_2017_04.jpg"},{"url":"https://upload.wikimedia.org/wikipedia/commons/thumb/4/42/Kensington_Market_Toronto_August_2017_02.jpg/960px-Kensington_Market_Toronto_August_2017_02.jpg","page":"https://commons.wikimedia.org/wiki/File%3AKensington_Market_Toronto_August_2017_02.jpg"}],
-      activities: ["Wander the car-free market streets","Street art and mural spotting"],
-      food: ["Empanadas and tacos from market stalls","Global street food counters"],
-      shops: ["Vintage clothing","Independent record shops"]
+      picks: [
+        {
+          name: "Wander Kensington Market",
+          category: "activity",
+          note: "Car-free market streets, vintage shops, murals — best on a lazy afternoon.",
+          coords: [43.6552136,-79.4022604]
+        },
+        {
+          name: "Golden Patty",
+          category: "restaurant",
+          note: "Jamaican baked goods and patties, right in the market.",
+          photos: ["images/golden-patty.jpg"],
+          coords: [43.65456,-79.40111]
+        },
+        {
+          name: "Global Cheese",
+          category: "shop",
+          note: "Walk in and see how many free samples you can talk your way into.",
+          photos: ["images/global-cheese.jpg"],
+          coords: [43.65455,-79.40092]
+        }
+      ]
     },
     {
       id: 'chinatown',
@@ -561,9 +710,43 @@
       outlineOnly: false,
       history: "Toronto's original downtown Chinatown near Bay and Dundas was largely demolished in the 1960s to build the new City Hall. The community regrouped around Spadina and Dundas, and this stretch grew into one of the largest Chinatowns in North America.",
       images: [{"url":"https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/Chinatown_Toronto_August_2017_03.jpg/960px-Chinatown_Toronto_August_2017_03.jpg","page":"https://commons.wikimedia.org/wiki/File%3AChinatown_Toronto_August_2017_03.jpg"},{"url":"https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Chinatown_Toronto_August_2017_01.jpg/960px-Chinatown_Toronto_August_2017_01.jpg","page":"https://commons.wikimedia.org/wiki/File%3AChinatown_Toronto_August_2017_01.jpg"},{"url":"https://upload.wikimedia.org/wikipedia/commons/thumb/0/0f/Chinatown_Toronto_August_2017_05.jpg/960px-Chinatown_Toronto_August_2017_05.jpg","page":"https://commons.wikimedia.org/wiki/File%3AChinatown_Toronto_August_2017_05.jpg"}],
-      activities: ["Explore Spadina Ave on foot"],
-      food: ["Dumplings and roast duck","Bubble tea"],
-      shops: ["Herbal shops and grocers","Bargain finds"]
+      picks: [
+        {
+          name: "Juicy Dumpling",
+          category: "restaurant",
+          note: "A late-night Toronto classic — some of the most affordable dumplings in the city, with a laid-back vibe.",
+          photos: ["images/juicy-dumpling.jpg"],
+          coords: [43.6526635,-79.3982828]
+        },
+        {
+          name: "Banh Mi Nguyen Huong",
+          category: "restaurant",
+          note: "Very cheap, very classic banh mi.",
+          photos: ["images/banh-mi-nguyen-huong.jpg"],
+          coords: [43.65365,-79.39874]
+        },
+        {
+          name: "Pho Hung",
+          category: "restaurant",
+          note: "Sit-down pho — get the Vietnamese iced coffee alongside it.",
+          photos: ["images/pho-hung.jpg"],
+          coords: [43.65444,-79.39903]
+        },
+        {
+          name: "Swatow Restaurant",
+          category: "restaurant",
+          note: "Quick, no-frills Cantonese comfort food in the heart of Chinatown.",
+          photos: ["images/swatow.jpg"],
+          coords: [43.6537956,-79.3979344]
+        },
+        {
+          name: "Rosewood Asian Cuisine",
+          category: "restaurant",
+          note: "Go for dim sum.",
+          photos: ["images/rosewood-1.webp"],
+          coords: [43.65308,-79.39664]
+        }
+      ]
     },
     {
       id: 'trinity',
@@ -573,9 +756,21 @@
       outlineOnly: false,
       history: "The park sits on the former grounds of Trinity College, an Anglican college founded in 1852 (long since merged into the University of Toronto). Its rolling dips trace the buried course of Garrison Creek, which still runs underground beneath the park.",
       images: [{"url":"https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/Trinity_Bellwoods_Gates.jpg/960px-Trinity_Bellwoods_Gates.jpg","page":"https://commons.wikimedia.org/wiki/File%3ATrinity_Bellwoods_Gates.jpg"},{"url":"https://upload.wikimedia.org/wikipedia/commons/thumb/e/ea/Trinity_Bellwoods_Park_2022.jpg/960px-Trinity_Bellwoods_Park_2022.jpg","page":"https://commons.wikimedia.org/wiki/File:Trinity_Bellwoods_Park_2022.jpg"},{"url":"https://upload.wikimedia.org/wikipedia/commons/thumb/5/58/Trinity_Bellwoods_Park_Cherry_blossom_2022.jpg/960px-Trinity_Bellwoods_Park_Cherry_blossom_2022.jpg","page":"https://commons.wikimedia.org/wiki/File:Trinity_Bellwoods_Park_Cherry_blossom_2022.jpg"}],
-      activities: ["Picnic in the park","Dogs off-leash area"],
-      food: ["Coffee on Dundas West","Casual bites nearby"],
-      shops: ["Small design and clothing shops on Queen"]
+      picks: [
+        {
+          name: "Sit in Trinity Bellwoods Park",
+          category: "activity",
+          note: "Grab a drink and sit in the park — busiest, and most fun, on a nice day.",
+          coords: [43.647644,-79.4139122]
+        },
+        {
+          name: "Bellwoods Brewery",
+          category: "activity",
+          note: "A great neighbourhood brewery, steps from the park.",
+          photos: ["images/bellwoods-brewery.jpg"],
+          coords: [43.647037,-79.4200613]
+        }
+      ]
     },
     {
       id: 'queenwest',
@@ -585,9 +780,45 @@
       outlineOnly: false,
       history: "Once a garment and warehouse strip, Queen West became Toronto's arts-and-fashion corridor through the 1980s and 90s as galleries, indie labels, and music venues moved into cheap storefronts — a reputation for street style and street art that has stuck.",
       images: [{"url":"https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Queen_Street_West_in_Toronto%2C_July_7_2025_%2807%29.jpg/960px-Queen_Street_West_in_Toronto%2C_July_7_2025_%2807%29.jpg","page":"https://commons.wikimedia.org/wiki/File:Queen_Street_West_in_Toronto,_July_7_2025_(07).jpg"},{"url":"https://upload.wikimedia.org/wikipedia/commons/thumb/b/be/Queen_Street_West_in_Toronto%2C_July_7_2025_%2803%29.jpg/960px-Queen_Street_West_in_Toronto%2C_July_7_2025_%2803%29.jpg","page":"https://commons.wikimedia.org/wiki/File:Queen_Street_West_in_Toronto,_July_7_2025_(03).jpg"},{"url":"https://upload.wikimedia.org/wikipedia/commons/thumb/b/bf/Queen_Street_West_in_Toronto%2C_July_7_2025_%2801%29.jpg/960px-Queen_Street_West_in_Toronto%2C_July_7_2025_%2801%29.jpg","page":"https://commons.wikimedia.org/wiki/File:Queen_Street_West_in_Toronto,_July_7_2025_(01).jpg"}],
-      activities: ["Gallery and street art walk"],
-      food: ["Trendy cafés and brunch spots"],
-      shops: ["Fashion and concept stores","The AGO gift shop"]
+      picks: [
+        {
+          name: "The AGO (Art Gallery of Ontario)",
+          category: "activity",
+          note: "A gorgeous Frank Gehry–designed building, with strong collections of Canadian, Western, and Indigenous art.",
+          photos: ["images/ago-exterior.jpg","images/ago-entrance.jpg"],
+          coords: [43.6536128,-79.39278]
+        },
+        {
+          name: "Alpha's Shawarma",
+          category: "restaurant",
+          note: "Some of the most highly-regarded shawarma in the city.",
+          photos: ["images/alphas-shawarma.jpg"],
+          coords: [43.6472274,-79.4045561]
+        },
+        {
+          name: "After Seven",
+          category: "activity",
+          note: "A speakeasy tucked behind a bubble tea counter — order on the vending-machine screen to get let in.",
+          flag: "Book ahead — gets fully booked",
+          photos: ["images/after-seven.jpg"],
+          coords: [43.6517366,-79.3906276]
+        },
+        {
+          name: "Mizzica Gelateria & Cafe",
+          category: "restaurant",
+          note: "Ice cream — can have really long lines.",
+          flag: "Long lines",
+          photos: ["images/mizzica.webp"],
+          coords: [43.649768,-79.391269]
+        },
+        {
+          name: "Allwyn's Bakery",
+          category: "restaurant",
+          note: "A chill Jamaican spot — try the boneless jerk chicken or a coco bread sandwich.",
+          photos: ["images/allwyns-bakery.jpg"],
+          coords: [43.64873,-79.3973]
+        }
+      ]
     },
     {
       id: 'stlawrence',
@@ -597,9 +828,6 @@
       outlineOnly: false,
       history: "A market has stood on this site since 1803, making it one of the city's oldest institutions. The South Market building's façade actually incorporates Toronto's original 1845 City Hall — and National Geographic once named it the world's best food market.",
       images: [{"url":"https://upload.wikimedia.org/wikipedia/commons/thumb/9/94/Toronto_-_ON_-_St_Lawrence_Market.jpg/960px-Toronto_-_ON_-_St_Lawrence_Market.jpg","page":"https://commons.wikimedia.org/wiki/File%3AToronto_-_ON_-_St_Lawrence_Market.jpg"},{"url":"https://upload.wikimedia.org/wikipedia/commons/thumb/0/06/St_Lawrence_Market%2C_Toronto%2C_West_partial_view_20170417_1.jpg/960px-St_Lawrence_Market%2C_Toronto%2C_West_partial_view_20170417_1.jpg","page":"https://commons.wikimedia.org/wiki/File%3ASt_Lawrence_Market%2C_Toronto%2C_West_partial_view_20170417_1.jpg"},{"url":"https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/St._Lawrence_Market%2C_Toronto_%2851351819%29.jpg/960px-St._Lawrence_Market%2C_Toronto_%2851351819%29.jpg","page":"https://commons.wikimedia.org/wiki/File%3ASt._Lawrence_Market%2C_Toronto_(51351819).jpg"}],
-      activities: ["Browse the historic market halls"],
-      food: ["Peameal bacon sandwich (the classic)","Fresh baked goods"],
-      shops: ["Local produce and specialty foods"]
     },
     {
       id: 'riverdale',
@@ -609,9 +837,6 @@
       outlineOnly: false,
       history: "Riverdale grew up as a streetcar suburb once bridges crossed the Don Valley in the late 1800s. Riverdale Farm, free to visit today, sits on the site of the old Riverdale Zoo, which operated here until 1974.",
       images: [{"url":"https://upload.wikimedia.org/wikipedia/commons/thumb/8/88/RiverdaleFarm.jpg/960px-RiverdaleFarm.jpg","page":"https://commons.wikimedia.org/wiki/File%3ARiverdaleFarm.jpg"},{"url":"https://upload.wikimedia.org/wikipedia/commons/thumb/5/57/Riverdale_Farm%2C_Toronto.jpg/960px-Riverdale_Farm%2C_Toronto.jpg","page":"https://commons.wikimedia.org/wiki/File%3ARiverdale_Farm%2C_Toronto.jpg"},{"url":"https://upload.wikimedia.org/wikipedia/commons/3/38/Riverdale_Farm._%286351039421%29.jpg","page":"https://commons.wikimedia.org/wiki/File%3ARiverdale_Farm._(6351039421).jpg"}],
-      activities: ["Skyline views from Riverdale Park","Visit the animals at Riverdale Farm"],
-      food: ["Casual spots along Broadview"],
-      shops: ["Small independent shops nearby"]
     },
     {
       id: 'islands',
@@ -621,9 +846,26 @@
       outlineOnly: true,
       history: "The islands were originally a sandbar peninsula, severed from the mainland by a storm in 1858. Hanlan's Point once held an amusement park and a baseball stadium where Babe Ruth hit his first professional home run in 1914 — a small residential community still lives on Ward's Island today.",
       images: [{"url":"https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Sunset_Toronto_Skyline_Panorama_Crop_from_Snake_Island.jpg/960px-Sunset_Toronto_Skyline_Panorama_Crop_from_Snake_Island.jpg","page":"https://commons.wikimedia.org/wiki/File%3ASunset_Toronto_Skyline_Panorama_Crop_from_Snake_Island.jpg"},{"url":"https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Toronto_Islands_Yacht_Club_and_Skyline.jpg/960px-Toronto_Islands_Yacht_Club_and_Skyline.jpg","page":"https://commons.wikimedia.org/wiki/File%3AToronto_Islands_Yacht_Club_and_Skyline.jpg"},{"url":"https://upload.wikimedia.org/wikipedia/commons/thumb/0/03/In_Toronto_Islands_seeing_CN_Tower_-_Canada.jpg/960px-In_Toronto_Islands_seeing_CN_Tower_-_Canada.jpg","page":"https://commons.wikimedia.org/wiki/File%3AIn_Toronto_Islands_seeing_CN_Tower_-_Canada.jpg"}],
-      activities: ["Bike or walk the car-free islands","Beach time and skyline views","Ferry from the harbourfront"],
-      food: ["Bring a picnic — options are limited out here"],
-      shops: ["Not really a shopping destination"]
+      picks: [
+        {
+          name: "Hanlan's Point",
+          category: "activity",
+          note: "One of three ferry stops — the quietest and least crowded.",
+          coords: [43.6221659,-79.3974203]
+        },
+        {
+          name: "Centre Island",
+          category: "activity",
+          note: "The most conventional stop — bike rentals and Centre Island Beach. Bring a Bike Share Toronto bike over on the ferry and dock it back on the mainland after.",
+          coords: [43.6228766,-79.3942999]
+        },
+        {
+          name: "Ward's Island",
+          category: "activity",
+          note: "The quiet, residential option — about 400 permanent homes; kids ferry to the mainland for high school.",
+          coords: [43.631356,-79.3559976]
+        }
+      ]
     },
     {
       id: 'littleportugal',
@@ -633,9 +875,29 @@
       outlineOnly: false,
       history: "Portuguese immigrants began settling around Dundas Street West in the 1950s and 60s, building the churches, social clubs, and cafés that still anchor the community's cultural life here.",
       images: [{"url":"https://upload.wikimedia.org/wikipedia/commons/thumb/f/fd/Streetlittleportugal.jpg/960px-Streetlittleportugal.jpg","page":"https://commons.wikimedia.org/wiki/File:Streetlittleportugal.jpg"},{"url":"https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/Dundasstreetlittleportugaltoronto.JPG/960px-Dundasstreetlittleportugaltoronto.JPG","page":"https://commons.wikimedia.org/wiki/File:Dundasstreetlittleportugaltoronto.JPG"},{"url":"https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/Padariabrasil.JPG/960px-Padariabrasil.JPG","page":"https://commons.wikimedia.org/wiki/File:Padariabrasil.JPG"}],
-      activities: ["Dundas West patio-hopping"],
-      food: ["Portuguese grilled chicken","Custard tarts (pastel de nata)"],
-      shops: ["Independent boutiques and record shops"]
+      picks: [
+        {
+          name: "Enoteca Sociale",
+          category: "restaurant",
+          note: "A genuinely good Italian restaurant.",
+          photos: ["images/enoteca-sociale.png"],
+          coords: [43.64968,-79.42571]
+        },
+        {
+          name: "Rhum Corner",
+          category: "restaurant",
+          note: "Haitian food — a little niche, and very good.",
+          photos: ["images/rhum-corner.jpg"],
+          coords: [43.650977,-79.4132083]
+        },
+        {
+          name: "Jean Darlene Piano Room",
+          category: "activity",
+          note: "A fun bar with a full band — they'll often invite you up to sing. Entrance is down the alley on Grove Ave, next to the KFC.",
+          photos: ["images/jean-darlene.jpg"],
+          coords: [43.6492,-79.42255]
+        }
+      ]
     },
     {
       id: 'cabbagetown',
@@ -645,9 +907,6 @@
       outlineOnly: false,
       history: "The name reportedly comes from 19th-century Irish immigrant residents who grew cabbages in their front yards. Today it holds one of the largest concentrations of preserved Victorian housing anywhere in North America.",
       images: [{"url":"https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Houses_in_Cabbagetown_Toronto.jpg/960px-Houses_in_Cabbagetown_Toronto.jpg","page":"https://commons.wikimedia.org/wiki/File%3AHouses_in_Cabbagetown_Toronto.jpg"},{"url":"https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Cabbagetown_-_Toronto_%285093595303%29.jpg/960px-Cabbagetown_-_Toronto_%285093595303%29.jpg","page":"https://commons.wikimedia.org/wiki/File%3ACabbagetown_-_Toronto_(5093595303).jpg"},{"url":"https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/Cabbagetown_houses.jpg/960px-Cabbagetown_houses.jpg","page":"https://commons.wikimedia.org/wiki/File%3ACabbagetown_houses.jpg"}],
-      activities: ["Walk the Victorian residential streets","Visit the Necropolis grounds"],
-      food: ["Casual cafés along Parliament St"],
-      shops: ["Small local boutiques"]
     },
     {
       id: 'entertainment',
@@ -657,9 +916,6 @@
       outlineOnly: false,
       history: "A former warehouse and garment-factory district, it transformed from the 1980s onward around King Street's theatres — the Royal Alexandra and Princess of Wales — and later the TIFF Bell Lightbox, becoming the city's nightlife and festival hub.",
       images: [{"url":"https://upload.wikimedia.org/wikipedia/commons/thumb/e/ef/Roy_Thomson_Hall%2C_Toronto%2C_Ontario%2C_2025-08-25.jpg/960px-Roy_Thomson_Hall%2C_Toronto%2C_Ontario%2C_2025-08-25.jpg","page":"https://commons.wikimedia.org/wiki/File:Roy_Thomson_Hall,_Toronto,_Ontario,_2025-08-25.jpg"},{"url":"https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/TIFF_Bell_Lightbox_Facade_%289162244404%29.jpg/960px-TIFF_Bell_Lightbox_Facade_%289162244404%29.jpg","page":"https://commons.wikimedia.org/wiki/File:TIFF_Bell_Lightbox_Facade_(9162244404).jpg"},{"url":"https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Princess_of_Wales_Theatre_2023.jpg/960px-Princess_of_Wales_Theatre_2023.jpg","page":"https://commons.wikimedia.org/wiki/File:Princess_of_Wales_Theatre_2023.jpg"}],
-      activities: ["Catch a show or concert","Nightlife and clubs"],
-      food: ["Pre-theatre dinner spots","Rooftop patios"],
-      shops: ["Flagship retail on King St W"]
     }
   ];
 
@@ -713,16 +969,78 @@
     overview.classList.add('is-visible');
   }
 
-  // --- right popup: activities / food / shops ---
+  // --- right popup: personal picks, grouped into restaurants / activities / shops ---
   const popup = document.getElementById('popup');
   const popupTitle = document.getElementById('popupTitle');
-  const popupActivities = document.getElementById('popupActivities');
-  const popupFood = document.getElementById('popupFood');
-  const popupShops = document.getElementById('popupShops');
+  const sectionRestaurants = document.getElementById('sectionRestaurants');
+  const sectionActivities = document.getElementById('sectionActivities');
+  const sectionShops = document.getElementById('sectionShops');
+  const picksRestaurants = document.getElementById('picksRestaurants');
+  const picksActivities = document.getElementById('picksActivities');
+  const picksShops = document.getElementById('picksShops');
   document.getElementById('popupClose').addEventListener('click', closePopup);
 
-  function fillList(el, items){
-    el.innerHTML = items.map(i => '<li>' + i + '</li>').join('');
+  document.querySelectorAll('.pick-section-toggle').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const section = btn.closest('.pick-section');
+      const collapsed = section.classList.toggle('is-collapsed');
+      btn.setAttribute('aria-expanded', collapsed ? 'false' : 'true');
+    });
+  });
+
+  // Splits picks into the three panel categories and numbers them sequentially
+  // (restaurants, then activities, then shops) so a pick's number matches its map pin.
+  function categorizePicks(picks){
+    picks = picks || [];
+    const restaurants = picks.filter(p => p.category === 'restaurant');
+    const shops = picks.filter(p => p.category === 'shop');
+    const activities = picks.filter(p => p.category !== 'restaurant' && p.category !== 'shop');
+    let n = 0;
+    const numbered = arr => arr.map(p => ({ pick: p, num: ++n }));
+    return {
+      restaurants: numbered(restaurants),
+      activities: numbered(activities),
+      shops: numbered(shops)
+    };
+  }
+
+  function pickCardHtml(pick, num){
+    const flag = pick.flag ? '<span class="pick-flag">' + pick.flag + '</span>' : '';
+    const photos = (pick.photos || []).map(src =>
+      '<img src="' + src + '" alt="' + pick.name + '">'
+    ).join('');
+    return '<div class="pick">' +
+      '<div class="pick-header"><span class="pick-number">' + num + '</span><p class="pick-name">' + pick.name + '</p></div>' +
+      '<p class="pick-note">' + pick.note + '</p>' +
+      flag +
+      (photos ? '<div class="pick-photos">' + photos + '</div>' : '') +
+      '</div>';
+  }
+
+  function fillSection(bodyEl, sectionEl, items){
+    sectionEl.classList.toggle('is-empty', !items.length);
+    bodyEl.innerHTML = items.map(it => pickCardHtml(it.pick, it.num)).join('');
+  }
+
+  let pickMarkers = [];
+  function clearPickMarkers(){
+    pickMarkers.forEach(m => map.removeLayer(m));
+    pickMarkers = [];
+  }
+
+  function renderPickMarkers(cats){
+    clearPickMarkers();
+    [].concat(cats.restaurants, cats.activities, cats.shops).forEach(({ pick, num }) => {
+      if(!pick.coords) return;
+      const icon = L.divIcon({
+        className: 'pick-marker-icon',
+        html: '<div class="pick-marker">' + num + '</div>',
+        iconSize: [22,22],
+        iconAnchor: [11,11]
+      });
+      const marker = L.marker(pick.coords, { icon, keyboard: false, interactive: false }).addTo(map);
+      pickMarkers.push(marker);
+    });
   }
 
   function isMobile(){
@@ -747,6 +1065,7 @@
 
   function closePopup(){
     popup.classList.remove('is-open');
+    clearPickMarkers();
     if(activeId && layers[activeId]){
       const hood = neighbourhoods.find(h => h.id === activeId);
       layers[activeId].setStyle(restingStyle(hood));
@@ -788,9 +1107,15 @@
     renderOverview(hood);
 
     popupTitle.textContent = hood.name;
-    fillList(popupActivities, hood.activities);
-    fillList(popupFood, hood.food);
-    fillList(popupShops, hood.shops);
+    [sectionRestaurants, sectionActivities, sectionShops].forEach(section => {
+      section.classList.remove('is-collapsed');
+      section.querySelector('.pick-section-toggle').setAttribute('aria-expanded', 'true');
+    });
+    const cats = categorizePicks(hood.picks);
+    fillSection(picksRestaurants, sectionRestaurants, cats.restaurants);
+    fillSection(picksActivities, sectionActivities, cats.activities);
+    fillSection(picksShops, sectionShops, cats.shops);
+    renderPickMarkers(cats);
     popup.classList.add('is-open');
 
     document.querySelectorAll('.item').forEach(el => el.classList.toggle('is-active', el.dataset.id === id));
@@ -866,22 +1191,26 @@
   const itineraryStack = document.getElementById('itineraryStack');
   const itineraryCards = document.getElementById('itineraryCards');
 
+  function itinSectionHtml(label, items){
+    if(!items.length) return '';
+    return '<h3 style="font-size:0.7rem;text-transform:uppercase;letter-spacing:0.08em;border:none;padding:0;margin:0.6rem 0 0.35rem;color:var(--ink-soft);">' + label + '</h3>'
+      + '<ul style="margin:0;padding-left:1.1rem;font-size:0.85rem;line-height:1.55;color:#33404d;">'
+      + items.map(it => '<li>' + it.pick.name + ' — ' + it.pick.note + '</li>').join('')
+      + '</ul>';
+  }
+
   function renderItineraryStack(key){
     const itin = ITINERARIES[key];
     itineraryCards.innerHTML = itin.order.map(id => {
       const hood = neighbourhoods.find(h => h.id === id);
       const c = itin.colors[id];
+      const cats = categorizePicks(hood.picks);
       return '<div class="itin-card" id="itinCard-' + id + '">'
         + '<h3 style="border-color:' + c + '">' + hood.name + '</h3>'
         + '<div class="popup-section" style="margin-top:0;padding-top:0;border-top:none;">'
-        + '<h3 style="font-size:0.7rem;text-transform:uppercase;letter-spacing:0.08em;border:none;padding:0;margin:0 0 0.35rem;color:var(--ink-soft);">Activities</h3>'
-        + '<ul>' + hood.activities.map(a => '<li>' + a + '</li>').join('') + '</ul></div>'
-        + '<div class="popup-section">'
-        + '<h3 style="font-size:0.7rem;text-transform:uppercase;letter-spacing:0.08em;border:none;padding:0;margin:0 0 0.35rem;color:var(--ink-soft);">Food</h3>'
-        + '<ul>' + hood.food.map(f => '<li>' + f + '</li>').join('') + '</ul></div>'
-        + '<div class="popup-section">'
-        + '<h3 style="font-size:0.7rem;text-transform:uppercase;letter-spacing:0.08em;border:none;padding:0;margin:0 0 0.35rem;color:var(--ink-soft);">Shops</h3>'
-        + '<ul>' + hood.shops.map(s => '<li>' + s + '</li>').join('') + '</ul></div>'
+        + itinSectionHtml('Restaurants', cats.restaurants)
+        + itinSectionHtml('Activities', cats.activities)
+        + itinSectionHtml('Shops', cats.shops)
         + '</div>';
     }).join('');
     itineraryStack.classList.add('is-open');
